@@ -1,0 +1,45 @@
+html, body {
+  margin:0;
+  padding:0;
+  height:100%;
+}
+
+.content {
+  margin-top: 10px;
+  min-height: 100%;
+  padding: 10px;
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  font-size: 12px;
+  text-align: center;
+}
+
+.review {
+  margin-top: 10px;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.review_opinion {
+  display: inline-block;
+}
+
+.masthead {
+  height: 100vh;
+  min-height: 500px;
+  background-image: url('https://source.unsplash.com/YLSwjSy7stw/1920x1080');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+  font-weight: bold;
+}
+
+.checked {
+  color: orange;
+}

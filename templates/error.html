@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block redirect %}
+<meta http-equiv='refresh' content='3; URL={{ url_for('index') }}'>
+{% endblock %}
+
+{% block title %}Error{% endblock %}
+
+{% block content %}
+<div class="content">
+  <div class="alert alert-danger" role="alert">
+    <h4 class="alert-heading">Error :(</h4>
+    <p>{{ message }}</p>
+  </div>
+</div>
+{% endblock %}

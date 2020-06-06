@@ -1,0 +1,128 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ book.title }} - {{ book.author }}{% endblock %}
+
+{% block content %}
+<div class="content">
+  <div class="card">
+    <div class="card-header">
+      Book :: Details
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col">
+          <p><b>Title:</b> {{ book.title }}</p>
+          <p><b>Author:</b> {{ book.author }}</p>
+          <p><b>Goodreads no. of ratings:</b> {{ goodreads["books"][0]["ratings_count"] }}</p>
+        </div>
+        <div class="col">
+          <p><b>Year:</b> {{ book.year }}</p>
+          <p><b>ISBN:</b> {{ book.isbn }}</p>
+          <p><b>Goodreads average rating:</b> {{ goodreads["books"][0]["average_rating"] }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+  <div class="card">
+    <div class="card-header">
+      Book :: Reviews [<button type="button" class="btn btn-link" data-toggle="modal" data-target="#staticBackdrop">Add a reivew</button>]
+
+      <!-- Form to leave a review -->
+      <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">Leave a review</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form action="" method="post">
+              <div class="modal-body">
+                  <div class="form-group">
+                    <label for="rating">Rating</label>
+                    <select name="rating" class="form-control" id="rating">
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="opinion">Opinion</label>
+                    <textarea name="opinion" class="form-control" id="opinion" rows="3" aria-describedby="opinionHelp"></textarea>
+                    <small id="opinionHelp" class="form-text text-muted">Do not exceed 250 words.</small>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Send</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- List all reviews -->
+    <div class="card-body">
+      {% for review in reviews: %}
+      <!-- REVIEW START -->
+      <div class="review">
+        <div class="row">
+          <svg class="bi bi-chat-square-quote" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2.5a2 2 0 0 1 1.6.8L8 14.333 9.9 11.8a2 2 0 0 1 1.6-.8H14a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+            <path d="M7.468 5.667c0 .92-.776 1.666-1.734 1.666S4 6.587 4 5.667C4 4.747 4.776 4 5.734 4s1.734.746 1.734 1.667z"/>
+            <path fill-rule="evenodd" d="M6.157 4.936a.438.438 0 0 1-.56.293.413.413 0 0 1-.274-.527c.08-.23.23-.44.477-.546a.891.891 0 0 1 .698.014c.387.16.72.545.923.997.428.948.393 2.377-.942 3.706a.446.446 0 0 1-.612.01.405.405 0 0 1-.011-.59c1.093-1.087 1.058-2.158.77-2.794-.152-.336-.354-.514-.47-.563z"/>
+            <path d="M11.803 5.667c0 .92-.776 1.666-1.734 1.666-.957 0-1.734-.746-1.734-1.666 0-.92.777-1.667 1.734-1.667.958 0 1.734.746 1.734 1.667z"/>
+            <path fill-rule="evenodd" d="M10.492 4.936a.438.438 0 0 1-.56.293.413.413 0 0 1-.274-.527c.08-.23.23-.44.477-.546a.891.891 0 0 1 .698.014c.387.16.72.545.924.997.428.948.392 2.377-.942 3.706a.446.446 0 0 1-.613.01.405.405 0 0 1-.011-.59c1.093-1.087 1.058-2.158.77-2.794-.152-.336-.354-.514-.469-.563z"/>
+          </svg> &nbsp
+          <p>{{ review.username }} on <i>{{ review.date.strftime("%d %B %Y") }}</i></p>
+          &nbsp | &nbsp
+          {% for i in range(review.rating) %}
+          <span class="fa fa-star checked"></span>
+          {% endfor %}
+        </div>
+        <div class="row">
+          <div class="review-opinion">
+            {% if review.opinion|length > 250: %}
+            {{ review.opinion[0:250] }} ...
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#fullReview-{{ review.username }}">
+              read more
+            </button>
+            {% else %}
+            {{ review.opinion }}
+            {% endif %}
+          </div>
+
+          <!-- Modal -->
+          <div class="modal fade" id="fullReview-{{ review.username }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  {{ review.opinion }}
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- REVIEW START -->
+      {% endfor %}
+    </div>
+    <!-- List all reviews -->
+  </div>
+</div>
+{% endblock %}

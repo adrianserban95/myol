@@ -5,6 +5,7 @@
 ### This project is a book review website. Users are able to register and log in using their username and password. Once they log in, they are able to search for books, leave reviews for individual books, and see the reviews made by other people. A third-party API by Goodreads is used, another book review website, to pull in ratings from a broader audience. Finally, users are able to query for book details and book reviews programmatically via the website's API.
 
 *Demo:* https://youtu.be/3nX9NLDWfDw
+
 *Programming Languages & Frameworks:*
 
  - Front-End: HTML, CSS, Bootstrap

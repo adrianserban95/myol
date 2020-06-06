@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}User Control Panel{% endblock %}
+
+{% block content %}
+<div class="content">
+  <form action="{{ url_for('usercp') }}" method="post">
+    <div class="form-group row">
+      <label for="username" class="col-sm-2 col-form-label">Username</label>
+      <div class="col-sm-10">
+        <input name="username" type="text" class="form-control" id="username" value="{{ user.username }}" readonly>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="email" class="col-sm-2 col-form-label">Email address</label>
+      <div class="col-sm-10">
+        <input name="email" type="email" class="form-control" id="email" value="{{ user.email }}">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="old-password" class="col-sm-2 col-form-label">Old Password</label>
+      <div class="col-sm-10">
+        <input name="old-password" type="password" class="form-control" id="old-password" placeholder="Old Password" required>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col">
+        <label for="new-password">New Password</label>
+        <input name="new-password" type="password" minlength="8" maxlength="20" class="form-control" id="new-password" aria-describedby="passwordlHelp" placeholder="New Password">
+        <small id="passwordHelp" class="form-text text-muted">Must be 8-20 characters long.</small>
+      </div>
+      <div class="col">
+        <label for="conf-password">Confirm Password</label>
+        <input name="conf-password" type="password" minlength="8" maxlength="20" class="form-control" id="conf-password" aria-describedby="confPasswordlHelp" placeholder="Confirm Password">
+        <small id="confPasswordHelp" class="form-text text-muted">Please confirm your password.</small>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+{% endblock %}
